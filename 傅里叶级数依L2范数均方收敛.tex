@@ -1,0 +1,181 @@
+\documentclass[linespread=1.5]{article}
+\usepackage{xeCJK}
+\usepackage{enumitem}
+\usepackage{fixltx2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	filecolor=magenta,
+	urlcolor=cyan,
+	pdfborder={0 0 0},
+	bookmarks=true,
+	bookmarksnumbered=true
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\usepackage[numbers,sort&compress,super,square]{natbib}
+\title{傅里叶级数依L2范数均方收敛}
+\author{陈柏均}
+\date{2025年4月10日}
+
+% 设置段落间距
+\setlength{\parskip}{0.5\baselineskip}
+\setlength{\abovedisplayskip}{8pt}
+\setlength{\belowdisplayskip}{8pt}
+\setlength{\abovedisplayshortskip}{5pt}
+\setlength{\belowdisplayshortskip}{5pt}
+
+\begin{document}
+	\maketitle
+	
+	\section{Bessel不等式的第二种证明}
+	
+	考虑在$L^2$空间中，对于标准正交基$\{e_k\}_{k=1}^\infty$和函数$f$，我们有如下等式：
+	
+	\[
+	\left\| f - \sum_{k=1}^n (f, e_k) e_k \right\|_2^2 = \left( f - \sum_{k=1}^n (f, e_k) e_k,\ f - \sum_{k=1}^n (f, e_k) e_k \right)
+	\]
+
+	\[
+		= \ (f, f) - \left( f, \sum_{k=1}^n (f, e_k) e_k \right) - \left( \sum_{k=1}^n (f, e_k) e_k, f \right) + \left( \sum_{k=1}^n (f, e_k) e_k, \sum_{k=1}^n (f, e_k) e_k \right)
+	\]
+
+	 第二项：
+	 \[
+	 \left( f, \sum_{k=1}^n \overline(f, e_k) e_k \right) = \sum_{k=1}^n (f, e_k) (f, e_k) = \sum_{k=1}^n |(f, e_k)|^2
+	 \]
+	 
+	 第三项：
+	 \[
+	 \left( \sum_{k=1}^n (f, e_k) e_k, f \right) = \sum_{k=1}^n (f, e_k) \overline{(e_k, f)} = \sum_{k=1}^n (f, e_k) {(f, e_k)} = \sum_{k=1}^n |(f, e_k)|^2
+	 \]
+		
+第四项
+
+\[
+\left( \sum_{k=1}^n (f, e_k) e_k, \sum_{k=1}^n (f, e_k) e_k \right)
+\]
+由于 \(e_k\) 是标准正交基底，因此交叉项消失，只剩下两边下标相同的项
+
+\[
+= \sum_{k=1}^n \left( (f, e_k) e_k, (f, e_k) e_k \right) = \sum_{k=1}^n (f, e_k) \overline{(f, e_k)} (e_k, e_k) = \sum_{k=1}^n |(f, e_k)|^2
+\]
+
+最终得
+\[
+\left\| f - \sum_{k=1}^n (f, e_k) e_k \right\|_2^2 = \|f\|_2^2 - \sum_{k=1}^n |(f, e_k)|^2 \geq 0
+\]
+
+		\[
+		\left( \sum_{k=1}^n (f, e_k) e_k, \sum_{k=1}^n (f, e_k) e_k \right) = \sum_{k=1}^n |(f, e_k)|^2
+		\]
+
+	
+	综合以上结果，我们得到关键不等式：
+	
+	\[
+	\left\| f - \sum_{k=1}^n (f, e_k) e_k \right\|_2^2 = \|f\|_2^2 - \sum_{k=1}^n |(f, e_k)|^2 \geq 0
+	\]
+	
+	由此直接导出Bessel不等式：
+	
+	\[
+	\sum_{k=1}^n |(f, e_k)|^2 \leq \|f\|_2^2
+	\]
+	
+	当$n \to \infty$时，级数仍然收敛：
+	
+	\[
+	\lim_{n \to \infty} \sum_{k=-n}^n |c_k|^2 < +\infty
+	\]
+	
+	\section{完备赋范空间中级数收敛性的证明}
+	
+	本部分将证明在完备赋范空间中，傅里叶级数的部分和序列收敛于原函数。基本思路分为三步：
+	\begin{enumerate}
+		\item 证明部分和序列是Cauchy列
+		\item 利用空间完备性得到收敛性
+		\item 验证极限函数与原函数相等
+	\end{enumerate}
+	
+	考虑标准正交基$\{e_k\}_{k=-\infty}^\infty$，其中$e_k(x) = \frac{1}{\sqrt{2\pi}}e^{ikx}$（已标准化）。定义部分和：
+	
+
+		\[
+	S_n(f) = \sum_{k=-n}^n c_k \cdot e_k \quad \quad c_k = (f, e_k)
+	\]
+	
+	\[
+	\| S_m(f) - S_n(f) \|_2^2 = \left\| c_{n+1} e_{n+1} + \cdots + c_m e_m + c_{-m} e_{-m} + \cdots + c_{-(n+1)} e_{-(n+1)} \right\|_2^2
+	\]
+	
+	\[
+	= \int_{-\pi}^\pi \left| c_{n+1} e_{n+1} + \cdots + c_m e_m + c_{-m} e_{-m} + \cdots + c_{-(n+1)} e_{-(n+1)} \right|^2 dx
+	\]
+	中间项正交消掉
+	
+	\[
+	= \int_{-\pi}^\pi |c_{n+1} e_{n+1}|^2 dx + \cdots + \int_{-\pi}^\pi |c_m e_m|^2 dx + \cdots + \int_{-\pi}^\pi |c_{-m} e_{-m}|^2 dx
+	\]
+	
+	\[
+	\leq \sum_{k=n+1}^m  |c_k|^2 + \sum_{k=-m}^{-(n+1)} |c_k|^2
+	\]
+	
+	由bessel不等式
+	\[
+ \sum_{k=-n}^n |c_k|^2 \leq \|f\|_2^2 < +\infty \quad f \in L_2
+	\]
+	
+	由柯西准则可知：
+	
+	\[
+	\sum_{k=n+1}^m |c_k|^2 < \frac{\varepsilon}{2}, \quad \sum_{k=-m}^{-(n+1)} |c_k|^2 < \frac{\varepsilon}{2}
+	\]
+	
+	故：
+	\[
+	\| S_m(f) - S_n(f) \|_2^2 < \varepsilon 
+	\]
+	
+	这表明$\{S_n(f)\}$是Cauchy列。由于$L^2$空间完备，存在$g \in L^2$使得：
+
+\[
+\lim_{n \to \infty} S_n(f) = g
+\]
+	
+
+最后验证$g = f$，对任意基元素$e_j$：
+	
+	\[
+	(g, e_j) = \left( \lim_{n \to \infty} S_n(f), e_j \right)
+	\]
+	
+	由内积的连续性，极限与内积可交换：
+	
+	\[
+	= \lim_{n \to \infty} (S_n(f), e_j) = \lim_{n \to \infty} \left( \sum_{k=-n}^n (f, e_k) e_k, e_j \right) = (f, e_j)
+	\]
+	
+	得：
+	
+	\[
+	(g, e_j) = (f, e_j) \Rightarrow (g - f, e_j) = 0 \Rightarrow g = f
+	\]
+	
+	故$f$在$L^2$空间下的傅里叶级数依L2范数的均方收敛，则必能按范数收敛。
+	
+
+
+	
+\end{document}
