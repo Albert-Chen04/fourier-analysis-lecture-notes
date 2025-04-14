@@ -206,12 +206,58 @@
 	\[
 	\lim_{h \to 0} \int_{-\infty}^{+\infty} |f(t)| \cdot |e^{-ith} - 1| dt = \int_{-\infty}^{+\infty} |f(t)| \cdot \lim_{h \to 0} |e^{-ith} - 1| dt
 	\]
-	
-	因为
+
+\begin{proof}
+	$	\lim_{h \to 0} |e^{-ith} - 1| = 0 $
 	
 	\[
-	\lim_{h \to 0} |e^{-ith} - 1| = 0
+	e^{-ith} = \cos(ht) - i \sin(ht)
 	\]
+	
+	因此，\(e^{-ith} - 1\) 可以表示为：
+	\[
+	e^{-ith} - 1 = \cos(ht) - 1 - i \sin(ht)
+	\]
+	
+	\[
+	|e^{-ith} - 1| = \sqrt{(\cos(ht) - 1)^2 + (\sin(ht))^2}
+	\]
+	
+	展开平方项：
+	\[
+	(\cos(ht) - 1)^2 + (\sin(ht))^2 = \cos^2(ht) - 2 \cos(ht) + 1 + \sin^2(ht)
+	\]
+	
+	\[
+	= 1 - 2 \cos(ht) + 1 = 2(1 - \cos(ht))
+	\]
+	
+	因此：
+	\[
+	|e^{-ith} - 1| = \sqrt{2(1 - \cos(ht))}
+	\]
+	
+利用三角恒等式 \(1 - \cos x = 2 \sin^2\left(\frac{x}{2}\right)\)：
+\[
+|e^{-ith} - 1| = \sqrt{2 \cdot 2 \sin^2\left(\frac{ht}{2}\right)} = 2 \left|\sin\left(\frac{ht}{2}\right)\right|
+\]
+
+当 \(h \to 0\) 时，\(\frac{ht}{2} \to 0\)，因此：
+\[
+\left|\sin\left(\frac{ht}{2}\right)\right| \approx \left|\frac{ht}{2}\right|
+\]
+
+因此：
+\[
+|e^{-ith} - 1| \approx 2 \cdot \left|\frac{ht}{2}\right| = |ht|
+\]
+
+当 \(h \to 0\) 时，\(|ht| \to 0\)，因此：
+\[
+\lim_{h \to 0} |e^{-ith} - 1| = 0
+\]
+	
+\end{proof}
 	
 	所以
 	\[
