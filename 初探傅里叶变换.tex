@@ -170,101 +170,61 @@
 	\]
 	这表明傅里叶变换将 $L^1$ 空间中的函数映射到 $L^\infty$ 空间中的函数，且变换后的函数几乎处处有界。
 	
-	\subsection{傅里叶变换\(\mathcal{F}[f](\lambda)\)的一致连续性}
-	
-	
-	\[
-	|F[f](\lambda + h) - F[f](\lambda)|
-	\]
-	
-	\[
-	= \left| \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it(\lambda + h)} dt - \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it\lambda} dt \right|
-	\]
-	
-	\[
-	= \left| \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it\lambda} \cdot (e^{-ith} - 1) dt \right|
-	\]
-	
-	\[
-	\leq \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| \cdot |e^{-it\lambda}| \cdot |e^{-ith} - 1| dt
-	\]
-	
-	因为
-	
-	\[
-	|e^{-it\lambda}| = 1，	|e^{-ith} - 1| \leq 2
-	\]
-	
-	所以
-	
-	\[
-	\leq \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| \cdot 2 dt = \frac{2}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| dt < +\infty
-	\]
-	
-	应用勒贝格控制收敛定理，交换极限与积分：
-	
-	\[
-	\lim_{h \to 0} \int_{-\infty}^{+\infty} |f(t)| \cdot |e^{-ith} - 1| dt = \int_{-\infty}^{+\infty} |f(t)| \cdot \lim_{h \to 0} |e^{-ith} - 1| dt
-	\]
+\subsection{傅里叶变换\(\mathcal{F}[f](\lambda)\)的一致连续性}
 
-\begin{proof}
-	$	\lim_{h \to 0} |e^{-ith} - 1| = 0 $
+
+\[ |F[f](\lambda + \Delta \lambda) - F[f](\lambda)| \]
+
+\[ = \left| \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it(\lambda + \Delta \lambda)} dt - \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it\lambda} dt \right| \]
+
+\[ = \left| \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} f(t) \cdot e^{-it\lambda} \cdot (e^{-it\Delta \lambda} - 1) dt \right| \leq \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| \cdot |e^{-it\lambda}| \cdot |e^{-it\Delta \lambda} - 1| dt \]
+
+因为
+
+\[ |e^{-it\lambda}| = 1，	|e^{-it\Delta \lambda} - 1| \leq 2 \]
+
+所以
+
+\[ \leq \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| \cdot 2 dt = \frac{2}{\sqrt{2\pi}} \int_{-\infty}^{+\infty} |f(t)| dt < +\infty \]
+
+应用勒贝格控制收敛定理，交换极限与积分：
+
+\[ \lim_{\Delta \lambda \to 0} \int_{-\infty}^{+\infty} |f(t)| \cdot |e^{-it\Delta \lambda} - 1| dt = \int_{-\infty}^{+\infty} |f(t)| \cdot \lim_{\Delta \lambda \to 0} |e^{-it\Delta \lambda} - 1| dt \]
+
+\begin{proof}	$ \lim_{\Delta \lambda \to 0} |e^{-it\Delta \lambda} - 1| = 0 $
+
 	
-	\[
-	e^{-ith} = \cos(ht) - i \sin(ht)
-	\]
+	\[ e^{-it\Delta \lambda} = \cos(t \Delta \lambda) - i \sin(t \Delta \lambda) \]
 	
-	因此，\(e^{-ith} - 1\) 可以表示为：
-	\[
-	e^{-ith} - 1 = \cos(ht) - 1 - i \sin(ht)
-	\]
+	因此，\(e^{-it\Delta \lambda} - 1\) 可以表示为：
+	\[ e^{-it\Delta \lambda} - 1 = \cos(t \Delta \lambda) - 1 - i \sin(t \Delta \lambda) \]
 	
-	\[
-	|e^{-ith} - 1| = \sqrt{(\cos(ht) - 1)^2 + (\sin(ht))^2}
-	\]
+	\[ |e^{-it\Delta \lambda} - 1| = \sqrt{(\cos(t \Delta \lambda) - 1)^2 + (\sin(t \Delta \lambda))^2} \]
 	
 	展开平方项：
-	\[
-	(\cos(ht) - 1)^2 + (\sin(ht))^2 = \cos^2(ht) - 2 \cos(ht) + 1 + \sin^2(ht)
-	\]
+	\[ (\cos(t \Delta \lambda) - 1)^2 + (\sin(t \Delta \lambda))^2 = \cos^2(t \Delta \lambda) - 2 \cos(t \Delta \lambda) + 1 + \sin^2(t \Delta \lambda) \]
 	
-	\[
-	= 1 - 2 \cos(ht) + 1 = 2(1 - \cos(ht))
-	\]
+	\[ = 1 - 2 \cos(t \Delta \lambda) + 1 = 2(1 - \cos(t \Delta \lambda)) \]
 	
 	因此：
-	\[
-	|e^{-ith} - 1| = \sqrt{2(1 - \cos(ht))}
-	\]
+	\[ |e^{-it\Delta \lambda} - 1| = \sqrt{2(1 - \cos(t \Delta \lambda))} \]
 	
-利用三角恒等式 \(1 - \cos x = 2 \sin^2\left(\frac{x}{2}\right)\)：
-\[
-|e^{-ith} - 1| = \sqrt{2 \cdot 2 \sin^2\left(\frac{ht}{2}\right)} = 2 \left|\sin\left(\frac{ht}{2}\right)\right|
-\]
-
-当 \(h \to 0\) 时，\(\frac{ht}{2} \to 0\)，因此：
-\[
-\left|\sin\left(\frac{ht}{2}\right)\right| \approx \left|\frac{ht}{2}\right|
-\]
-
-因此：
-\[
-|e^{-ith} - 1| \approx 2 \cdot \left|\frac{ht}{2}\right| = |ht|
-\]
-
-当 \(h \to 0\) 时，\(|ht| \to 0\)，因此：
-\[
-\lim_{h \to 0} |e^{-ith} - 1| = 0
-\]
+	利用三角恒等式 \(1 - \cos x = 2 \sin^2\left(\frac{x}{2}\right)\)：
+	\[ |e^{-it\Delta \lambda} - 1| = \sqrt{2 \cdot 2 \sin^2\left(\frac{t \Delta \lambda}{2}\right)} = 2 \left|\sin\left(\frac{t \Delta \lambda}{2}\right)\right| \]
+	
+	当 \(\Delta \lambda \to 0\) 时，由洛必达法则可得
+	\[|e^{-it\Delta \lambda} - 1|= \left|2\sin\left(\frac{t \Delta \lambda}{2}\right)\right| = \left|\frac{2t \Delta \lambda}{2}\right|= |t \Delta \lambda| \]
+	
+	
+	对于$\forall t\in \mathbb{R}$,当 \(\Delta \lambda \to 0\) 时，\(|t \Delta \lambda| \to 0\)
+	\[ \lim_{\Delta \lambda \to 0} |e^{-it\Delta \lambda} - 1| = 0 \]
 	
 \end{proof}
-	
-	所以
-	\[
-	\lim_{h \to 0} |F[f](\lambda + h) - F[f](\lambda)| = 0
-	\]
-	
-	这表明傅里叶变换 \(\mathcal{F}[f](\lambda)\) 是一致连续的。
+
+最终得
+\[ \lim_{\Delta \lambda \to 0} |F[f](\lambda + \Delta \lambda) - F[f](\lambda)| = 0 \]
+
+这表明傅里叶变换 \(\mathcal{F}[f](\lambda)\) 是一致连续的。
 	
 	\section{傅里叶变换的性质（续）}
 	
