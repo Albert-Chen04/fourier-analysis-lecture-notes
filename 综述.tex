@@ -1,0 +1,712 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}                    % 中文支持
+\usepackage{geometry}                      % 页面布局
+\usepackage{amsmath,amssymb,amsthm}        % 数学符号与定理
+\usepackage{mathtools,bm}                  % 高级数学工具
+\usepackage{graphicx}                      % 图片插入
+\usepackage{booktabs}                      % 三线表
+\usepackage[numbers,sort&compress]{natbib} % 参考文献
+\usepackage{caption}                       % 图表标题
+\usepackage{enumitem}                      % 列表环境
+
+% ========== 页面布局 ==========
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\setlength{\parskip}{0.5em}                % 段落间距
+\renewcommand{\baselinestretch}{1.2}       % 行距
+
+% ========== 数学命令 ==========
+\newcommand{\diff}{\mathop{}\!\mathrm{d}}  % 微分符号
+\newcommand{\R}{\mathbb{R}}                % 实数集
+\newcommand{\C}{\mathbb{C}}                % 复数集
+\newcommand{\Z}{\mathbb{Z}}                % 整数集
+\newcommand{\N}{\mathbb{N}}                % 自然数集
+\DeclareMathOperator{\supp}{supp}          % 支持集符号
+
+% ========== 超链接 & PDF 书签处理 ==========
+\usepackage[colorlinks, linkcolor=black, unicode]{hyperref} % 修改 linkcolor 为 black
+\pdfstringdefDisableCommands{%
+	\def\R{R}%
+	\def\C{C}%
+	\def\Z{Z}%
+	\def\N{N}%
+	\def\diff{d}%
+}
+
+% ========== 定理环境 ==========
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}  % 添加推论环境
+\newtheorem{solution}{解}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{示例}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注记}
+
+% ========== 文档信息 ==========
+\title{不同函数空间下的傅里叶变换}
+\author{陈柏均}
+\date{\today}
+
+
+\begin{document}
+	\maketitle
+		\begin{abstract}
+		本文目的是为了探讨不同函数空间下的傅里叶变换。在此之前，首先讨论$L^p$空间，$C^n(\Omega)$空间，解析函数空间，$C_c^\infty(\Omega)$空间，速降函数S空间在测度有限和测度无穷的关系，因为如果空间有包含关系，那子空间的傅里叶变换性质就可以继承大空间的性质。测度有限是为了傅里叶级数的说明，增加文章可读性。测度无穷才是为我们的傅里叶变换做铺路。
+		
+		其次，还介绍了紧支撑的概念。是因为傅里叶变换本质就是积分，想要变换存在，就必须要积分有限，这正是$L^p$空间所能做到的，但是我们想探讨其他空间，只要让他包含$L^p$空间中就能得到很好2的处理。比如光滑函数。在测度无穷下，光滑函数空间与$L^p$空间无包含关系，加上紧支撑就能被包含在$L^p$空间，这就是紧支撑的作用。
+		
+		然后，我们探讨不同函数空间下的傅里叶变换的定义和性质。
+		
+	    最后为了解决$\delta$函数，引入了广义函数的概念，把传统函数空间扩大，让$\delta$函数也在讨论范畴。还介绍了$D$和$S$的广义函数空间$D'$和$S'$,并讨论他们与传统函数空间的关系和他们的傅里叶变换。最后才探讨$\delta$函数和其傅里叶变换。
+	\end{abstract}
+	\newpage
+	
+		\tableofcontents
+	\clearpage
+	
+	
+	\section{不同函数空间及其关系}
+	\subsection{\texorpdfstring{$L^p$}{Lp} 空间与 \texorpdfstring{$L^\infty$}{L∞} 空间}
+	
+	\begin{definition}$L^p$ 空间
+		
+		对函数 $f: \mathbb{R} \to \mathbb{C}$，若积分 $\int_{-\infty}^\infty |f(x)|^p dx$ 有限（$1 \leq p < \infty$），则称 $f$ 属于 $L^p$ 空间。其范数定义为：
+		\[
+		\|f\|_{L^p} = \left( \int_{-\infty}^\infty |f(x)|^p dx \right)^{1/p}.
+		\]
+	\end{definition}
+	
+\begin{definition}$L^\infty$ 空间
+	
+	称函数 $f: \mathbb{R} \to \mathbb{C}$ 是\textbf{本质有界}的，若存在常数 $M \geq 0$，使得
+	\[
+	|f(x)| \leq M \quad \text{对几乎所有的 } x \in \mathbb{R} \text{ 成立} \, (\text{a.e.}),
+	\]
+	其本质确界范数定义为：
+	\[
+	\|f\|_{L^\infty} := \inf \big\{ M \geq 0 \,\big|\, |f(x)| \leq M \ \text{a.e.} \big\}.
+	\]
+	所有本质有界函数构成的集合记为 $L^\infty(\mathbb{R})$。
+\end{definition}
+	
+
+	
+
+	
+	\subsection{\texorpdfstring{$C^n(\Omega)$}{Cn} 与 \texorpdfstring{$C^\infty(\Omega)$}{C∞}光滑函数空间}
+	
+	\begin{definition}$C^n(\Omega)$和$C^\infty(\Omega)$
+		
+		令 $\Omega\subset\R^d$ 为开集，则
+		\[
+		C^n(\Omega)
+		=\{f:\Omega\to\R:\text{$f$ 具有连续的 $0,1,\dots,n$ 阶偏导数}\},
+		\]
+		\[
+		C^\infty(\Omega)
+		=\bigcap_{n=0}^\infty C^n(\Omega).
+		\]
+	\end{definition}
+	
+	在有界域 $\Omega$ 上，任意连续函数必有界，从而
+	\[
+	C^n(\Omega)\subset L^p(\Omega),\quad 1\le p\le\infty.
+	\]
+	
+	\subsection{解析函数$C^\omega(\Omega)$}
+	
+	\begin{definition}解析函数$C^\omega(\Omega)$
+		
+		若 $f:\Omega\to\R$ 在开集 $\Omega\subset\R^n$ 上可微无穷次，且任取 $x_0\in\Omega$，函数 $f$ 在 $x_0$ 的泰勒级数收敛并与 $f$ 一致，则称 $f$ 为解析函数。
+	\end{definition}
+	
+	所有解析函数构成的集合记作 $C^\omega(\Omega)$，有包含关系：
+	\[
+	C^\omega(\Omega)\subsetneq C^\infty(\Omega).
+	\]
+	而且解析函数都是非紧支撑的，除了0函数。
+
+	
+	在拓扑意义下，$C^\omega(\Omega)$ 在 $C^\infty(\Omega)$ 中并不稠密。紧支撑光滑函数 $C_c^\infty(\Omega)$ 的存在正是为了替代解析函数在分布论中的不足，因为解析函数不允许有紧支撑，而 $C_c^\infty$ 中的 bump 函数是构造近似单位、分布作用的重要工具。
+	
+	\subsection{紧支撑概念的引入}
+	光滑函数空间 $C^\infty(\mathbb{R})$ 中的函数在无穷远处可能不衰减，导致其不属于 $L^p(\mathbb{R})$。为保证积分收敛性，引入紧支撑光滑函数空间：
+	\[
+	C_c^\infty(\mathbb{R}) = \left\{ f \in C^\infty(\mathbb{R}) \,\big|\, \supp(f) \text{ 为紧集} \right\},
+	\]
+	显然满足 $C_c^\infty(\mathbb{R}) \subset L^p(\mathbb{R})$ 对任意 $1 \leq p \leq \infty$ 成立。
+	\subsection{\texorpdfstring{$C_c^\infty(\Omega)$}{Cc∞}紧支撑光滑函数空间}
+	
+	\begin{definition}$C_c^\infty(\Omega)$紧支撑光滑函数空间
+
+		\[
+		\mathcal D(\Omega)=	C_c^\infty(\Omega)
+		=\{\varphi\in C^\infty(\Omega):\supp\varphi\subset K,\ K\subset\subset\Omega\},
+		\]
+		
+		
+		即所有支持集紧于 $\Omega$ 的光滑函数。其在分布与弱解理论中用于构造逼近序列及光滑化操作。
+		
+	\end{definition}
+	
+	\subsection{速降函数空间 $\mathcal S$}
+	
+	\begin{definition}Schwartz 空间
+		
+		Schwartz 空间（速降函数空间）是指在光滑函数上所有函数及其导数在无穷远处衰减得比任意多项式还快的光滑函数组成的集合：
+		\[
+		\mathcal S(\R^n)
+		=\Bigl\{f\in C^\infty(\R^n):
+		\forall\alpha,\beta\in\N^n,\;\sup_{x\in\R^n}|x^\alpha D^\beta f(x)|<\infty\Bigr\}.
+		\]
+	\end{definition}
+	
+	由定义可知速降函数空间 $\mathcal S$仅在测度无穷才存在。
+	
+	
+	
+	  \begin{theorem}求导运算和与多项式乘积运算封闭
+		
+			Schwartz 空间在速降意义下定义，记作 \( \mathcal{S} = \mathcal{S}(\mathbb{R}) \)。该空间是复数域 \( \mathbb{C} \) 上的线性空间。进一步地，若 \( f \in \mathcal{S}(\mathbb{R}) \)，则有
+		\[
+		f'(x) = \frac{\mathrm{d}f}{\mathrm{d}x} \in \mathcal{S}(\mathbb{R}), \quad xf(x) \in \mathcal{S}(\mathbb{R}).
+		\]
+	\end{theorem}
+	
+\begin{theorem}$\mathcal S_c(\R^n)=C_c^\infty(\R^n)$
+	
+	
+	由于紧支撑光滑函数在无穷远处恒为零，可得：
+	\[
+	\mathcal S_c(\R^n)
+	=\mathcal S(\R^n)\cap C_c^\infty(\R^n)
+	=C_c^\infty(\R^n).
+	\]
+	\end{theorem}
+	
+	\section{不同函数空间在测度有穷和无穷下的关系}
+	
+	\subsection{测度有限情形 ($\mu(X)<\infty$)}
+	\begin{itemize}
+\item		在有限测度空间中，若 $1\leq p<q\le\infty$，则$	L^q(X)\subset L^p(X)$
+\item	对于有界开域 $\Omega$，$	C^n(\Omega)\subset L^p(\Omega),\quad
+	C^\infty(\Omega)\subset L^p(\Omega),\quad
+	C_c^\infty(\Omega)\subset L^p(\Omega)$
+\end{itemize}
+	
+	\subsection{测度无穷情形 ($\mu(X)=\infty$)}
+	空间包含关系可总结为（例子见附录\ref{app:first}）
+\begin{itemize}
+\item	$	C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset C^\infty(\mathbb{R})$
+\item	$C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset  L^p(\mathbb{R}) ,1\leq p\le\infty$
+\item	$\mathcal{S}(\mathbb{R}^n) \subsetneq \bigcap_{1 \leq p < \infty} L^p(\mathbb{R}^n)$
+\item	 $\mathcal{S}(\mathbb{R}^n)$ 与$ C^\omega(\mathbb{R})$相交但互不包含。
+\end{itemize}
+ 
+ 
+ 
+在下文我们将讨论不同空间下的傅里叶变换，故如果空间有包含关系，那性质子空间就可以继承大空间的性质，就不再重复说明，子空间的性质我们只讨论子空间特有的性质。
+
+\subsubsection{稠密关系}
+\begin{itemize}
+\item $C_c^\infty(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密；
+ 
+	\item $\mathcal{S}(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中同样稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密；
+	 
+	 \item $ L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中同样稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密。
+	\end{itemize}
+
+
+
+	
+\section{不同函数空间下的傅里叶变换}
+	在下文我们将讨论不同空间下的傅里叶变换，故如果空间有包含关系，那性质子空间就可以继承大空间的性质，就不再重复说明，子空间的性质我们只讨论子空间特有的性质。
+\subsection{$L^1$ 空间下的傅里叶变换定义与性质}
+设函数 $f \in L^1(\mathbb{R})$ 的傅里叶变换定义为：
+\[
+\hat{f}(\xi) = \int_{\mathbb{R}} f(x) e^{-2\pi i x\xi} \, \diff x,
+\]
+此时 $\hat{f}$ 是 $\mathbb{R}$ 上的连续有界函数，即 $\hat{f} \in C_b(\mathbb{R})$。这一结论直接源于 Riemann-Lebesgue 引理及积分绝对收敛性。也间接说明了其有界线性算子，连续的性质。
+
+
+\subsubsection{泛函拓扑性质}
+  \begin{theorem}线性
+  	
+\(\hat{f}(\xi)\)是线性算子。
+\end{theorem}
+
+\begin{theorem}有界
+	
+	若 \( f \in L^1(\mathbb{R}) \)，\(\hat{f}(\xi)\) 是有界线性算子。
+\end{theorem}
+
+\begin{theorem}一致连续
+	
+若 \( f \in L^1(\mathbb{R}) \)，\(\hat{f}(\xi)\) 是一致连续的。
+\end{theorem}
+
+
+
+
+
+\subsubsection{衰减性质}
+ \begin{theorem}Riemann-Lebesgue 引理
+ 	
+ 若 \( f \in L^1(\mathbb{R}) \)，则$\lim_{|\lambda| \to \infty} \hat{f}(\lambda) = 0 $
+ \end{theorem}
+ 
+
+
+ \subsubsection{三大经典性质}
+ 若 \( f \in L^1(\mathbb{R}) \)，三大性质可以直接得到。
+ 
+ 若$ L^1(\mathbb{R}) \cap L^2(\mathbb{R})$
+ 当函数 \( f \in L^2(\mathbb{R}) \) 时，傅里叶变换通过 Plancherel 定理延拓定义。具体而言，由于 \( L^1(\mathbb{R}) \cap L^2(\mathbb{R}) \) 在 \( L^2(\mathbb{R}) \) 中稠密，可选取序列 \( \{f_k\} \subset L^1 \cap L^2 \) 使得 \( f_k \rightarrow f \) 于 \( L^2 \)范数意义下。对平移、调制和伸缩等性质，首先在 \( f_k \) 上应用经典定理（要求 \( f_k \in L^1 \)），再通过 \( L^2 \)-范数的连续性对极限操作进行验证：
+ \[
+ \lim_{k \rightarrow \infty} \| \mathcal{F}[T f_k] - T \mathcal{F}[f_k] \|_{L^2} = 0,
+ \]
+ 其中 \( T \) 代表平移、调制或伸缩算子。由此可得，这些性质对任意 \( f \in L^2(\mathbb{R}) \) 仍成立。这一过程表明，尽管 \( L^2 \)傅里叶变换不直接依赖积分收敛性，但其核心操作性质可通过稠密子集的逼近得以保持。
+  \begin{theorem}平移
+ \[
+ \mathcal{F}\big[f(x-a)\big](\lambda) = e^{-i\lambda a} \cdot \mathcal{F}[f](\lambda)
+ \]
+\end{theorem}
+
+ \begin{theorem}调制
+ \[
+ \mathcal{F}\left[e^{iax}f(x)\right](\lambda) = \mathcal{F}[f](\lambda - a)
+ \]
+\end{theorem}
+
+\begin{theorem}伸缩
+	\[
+\mathcal{F}\big[f(bx)\big](\lambda) = \frac{1}{|b|} \mathcal{F}[f]\left( \frac{\lambda}{b} \right)
+\]
+\end{theorem}
+
+ \subsubsection{微分性质}
+ \begin{theorem}微分
+ 	
+ 如果 \( f \) 为连续，分段平滑且 \( f^{(n)} \in L^1 \)，则
+ 
+ \[
+ \widehat{f'}(\xi) = (i\xi) \widehat{f}(\xi), \quad \widehat{f^{(n)}}(\xi) = (i\xi)^n \widehat{f}(\xi)
+ \]
+ 同理可得逆变换
+ \[
+ \mathcal{F}^{-1}[f^{(n)}(\lambda)](t) = (-it)^n \mathcal{F}^{-1}[f](t)
+ \]
+\end{theorem}
+
+\begin{theorem}多项式与微分
+	
+	假设对任意的 \( k = 0, 1, 2, \cdots, n \), \( x^k f(x) \in L^1(\mathbb{R}) \)，则 \( \mathcal{F}[f] \in C^n(\mathbb{R}) \)，且对任意的 \( k = 1, 2, \cdots, n \)，有
+	\[
+	\mathcal{F}\left[x^k f(x)\right](\lambda) = i^k \frac{d^k}{d\lambda^k} \{\mathcal{F}[f](\lambda)\}.
+	\]
+同理可得逆变换
+\[
+\mathcal{F}^{-1}[\lambda^n f(\lambda)](x) = (-i)^n \frac{d^n}{dt^n} \left\{ \mathcal{F}^{-1}[f](x) \right\}
+\]
+\end{theorem}
+
+\begin{lemma}
+若 \( f \)连续且 \( xf(x) \in L^1 \)，则必然有 \( f \in L^1 \)
+
+\end{lemma}
+
+\begin{corollary}
+若 \( f \) 为连续，分段平滑而且\( xf(x)  \in L^1\)则
+\[
+\mathcal{F}(xf(x)) = i (\widehat{f})'(\xi)
+\]
+  \end{corollary}
+
+
+
+
+
+
+
+ \subsubsection{积分性质}
+ \begin{theorem}积分
+ 	
+ 设 \( f(t) \) 是一个可积函数，其傅里叶变换为 \( \hat{f}(\omega) \)。对于函数 \( g(t) = \int_{-\infty}^{t} f(\tau) \, d\tau \)，其傅里叶变换可以表示为：
+ \[
+ \mathcal{F}\left[\int_{-\infty}^{t} f(\tau) \, d\tau\right](\omega) = \frac{1}{i\omega} \hat{f}(\omega) + \pi \hat{f}(0) \delta(\omega)
+ \]
+ 其中，\( \delta(\omega) \) 是狄拉克$\delta$函数，\( \hat{f}(0) \) 是 \( f(t) \) 在 \( \omega = 0 \) 处的傅里叶变换值。
+ \end{theorem}
+ 
+  \begin{corollary}
+如果当 \( t \to +\infty \) 时，\( g(t) \to 0 \)，则上式简化为：
+\[
+\mathcal{F}\left[\int_{-\infty}^{t} f(\tau) \, d\tau\right](\omega) = \frac{1}{i\omega} \hat{f}(\omega)
+\]
+  \end{corollary}
+
+ 
+ 
+ 
+ \subsubsection{乘积公式}
+\begin{theorem}乘积公式
+	
+	若 \(f \in L^1(\mathbb{R})\) ， \(g \in L^1(\mathbb{R})\) ，则 \(\int_{-\infty}^{\infty}\hat{f}(x)g(x)dx = \int_{-\infty}^{\infty}f(x)\hat{g}(x)dx\) 。	
+\end{theorem}
+
+\subsubsection{$L^1$空间上的卷积}
+\begin{definition}卷积
+	
+	设 \( f \) 和 \( g \) 是 \(\mathbb{R}\) 上的两个函数，如果积分
+	\[
+	(f * g)(x) = \int_{-\infty}^{\infty} f(x - t) g(t) \, dt = \int_{-\infty}^{\infty} f(t) g(x - t) \, dt
+	\]
+	存在，称其为 \( f \) 和 \( g \) 的卷积。
+\end{definition}
+
+\begin{theorem}卷积范数有限
+	
+	设 \( f, g \in L^1(\mathbb{R}) \)，则 \( f * g \in L^1(\mathbb{R}) \)，满足
+	\[
+	\| f * g \|_{L^1} \leq \| f \|_{L^1} \| g \|_{L^1},
+	\]
+
+\end{theorem}
+
+\begin{theorem}卷积的傅里叶变换
+	
+	设 \( f, g \in L^1(\mathbb{R}) \)，则 \( f * g \in L^1(\mathbb{R}) \)，则
+	\[
+	\mathcal{F}[f * g](\lambda) = \sqrt{2\pi} \, \widehat{f}(\lambda) \widehat{g}(\lambda).
+	\]
+\end{theorem}
+
+\begin{theorem}卷积范数性质
+	
+已知 \(1\leq p\leq +\infty\) ，\(f\in L^p(\mathbb{R}^n)\) ，\(g\in L^1(\mathbb{R}^n)\) ，则 \(f * g\in L^p(\mathbb{R}^n)\) 且 \(\|f * g\|_p\leq\|f\|_p\|g\|_1\) 。
+\end{theorem}
+
+\subsection{$L^1 \cap L^2$ 空间下的傅里叶变换}
+对于 $f \in L^1(\mathbb{R}) \cap L^2(\mathbb{R})$，其傅里叶变换 $\hat{f} \in L^2(\mathbb{R})$ 。
+
+$L^1(\mathbb{R}) \cap L^2(\mathbb{R}$在$L^2(\mathbb{R})$稠密。因为稠密性，故可得 $f \in L^2(\mathbb{R})$，其傅里叶变换 $\hat{f} \in L^2(\mathbb{R})$。也可从$S(\mathbb{R}$在$L^2(\mathbb{R})$稠密来推导。
+
+\subsubsection{$L^2$空间上的卷积}
+\begin{lemma}
+	设 \( f, g \in L^2(\mathbb{R}) \)，则 \( f * g \) 在 \(\mathbb{R}\) 上连续并且有界，
+	\[
+	|(f * g)(x)| \leq \| f \|_{L^2} \| g \|_{L^2}, \quad x \in \mathbb{R}.
+	\]
+\end{lemma}
+
+\begin{remark}
+	粗略地讲，卷积可以看作加权求和，具有平滑的作用。上述 \( f, g \) 不一定连续，但是它们的卷积是连续函数。
+\end{remark}
+
+\begin{theorem}卷积定理
+	
+	设 \( f, g \in L^2(\mathbb{R}) \)，则
+	\[
+	f * g = \sqrt{2\pi} \mathcal{F}^{-1}[\hat{f} \cdot \hat{g}], \quad \mathcal{F}[f \cdot g] = \frac{1}{\sqrt{2\pi}} \hat{f} * \hat{g}.
+	\]
+\end{theorem}
+
+
+\subsubsection{酉算子}
+
+
+\begin{definition}
+	对于内积空间V和W上的线性算子\( T: V \mapsto W \)，若
+	\[
+	\langle v, T^*(w) \rangle_V = \langle T(v), w \rangle_W
+	\]
+	则\( T^*: W \mapsto V \)为\( T \)的伴随算子。上面的定理说明了在$L^2$空间下的傅里叶变换的伴随算子就是傅里叶逆变换。
+\end{definition}
+
+\begin{theorem}
+	设\( f, g \in L^2(\mathbb{R}) \)，则有
+	\[
+	\langle \mathcal{F}[f], g \rangle_{L^2} = \langle f, \mathcal{F}^{-1}[g] \rangle_{L^2}
+	\]
+\end{theorem}
+
+即\( f \in L^1 \cap L^2 \),傅里叶变换的伴随算子 \( \mathcal{F}^* \) 满足
+\[
+\mathcal{F}^* g(x) = \int_{\mathbb{R}} g(\omega) \frac{e^{i\omega x}}{\sqrt{2\pi}} \, \mathrm{d}\omega,
+\]
+且 \( \mathcal{F}^* \mathcal{F} = \mathcal{I}d \)，即伴随算子等于逆算子，表明 \( \mathcal{F} \) 在$L^2$是酉算子。
+
+\subsubsection{Plancherel定理}
+\begin{theorem}Plancherel定理
+	
+	设 \( f, g \in L^2(\mathbb{R}) \)，则
+	\[
+	\langle \mathcal{F}[f], \mathcal{F}[g] \rangle_{L^2} = \langle f, g \rangle_{L^2}
+	\]
+	\[
+	\langle \mathcal{F}^{-1}[f], \mathcal{F}^{-1}[g] \rangle_{L^2} = \langle f, g \rangle_{L^2}
+	\]
+特别地，
+\[
+\| \mathcal{F}[f] \|_{L^2} = \| f \|_{L^2}
+\]
+\end{theorem}
+Plancherel定理的证明依赖于$L^1\cap L^2$在$L^2$中的稠密性.
+
+
+\subsubsection{Fourier逆变换}
+若 \( \mathcal{F}f \in L^1 \cap L^2 \)，则原函数可通过逆变换直接恢复：
+\[
+f(x) = \frac{1}{\sqrt{2\pi}} \int_{\mathbb{R}} \mathcal{F}f(\omega) e^{i\omega x} \, \mathrm{d}\omega.
+\]
+对于 \( f \in L^1 \cap L^2 \)，逆变换在 \( L^2 \)范数相等（逆变换的Plancherel定理）。
+
+
+
+
+
+
+
+\subsection{速降函数空间$S$下的傅里叶变换}
+若 $f \in S(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于 Schwartz 空间 $\mathcal{S}(\mathbb{R})$。这说明其傅里叶变换是自身到自身的映射，高斯型函数是其最经典的例子，而且是非紧支撑的。
+
+\subsubsection{例子}
+\begin{example}
+\(f(t)=e^{-t^{2}} \in S \)但是\(e^{-|t|} \notin S\)
+\end{example}
+
+\begin{example}
+若 \(P_{n}(t)\) 为多项式,则 \(P_{n}(t)e^{-t^{2}} \in S\)但是\(\frac{1}{1 + t^{2}} \notin S\)
+\end{example}
+
+
+\subsubsection{高斯型函数的傅里叶变换}
+\begin{lemma}高斯积分
+	
+	\[
+	\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+	\]
+\end{lemma}
+
+\begin{proof}
+ 设 \( A = \int_{-\infty}^{\infty} e^{-x^2} dx \)，则由极坐标与 Fubini 定理可得
+\[
+\begin{aligned}
+	A^2 &= \int_{-\infty}^{\infty} e^{-x^2} dx \cdot \int_{-\infty}^{\infty} e^{-y^2} dy = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-(x^2 + y^2)} dx dy \\
+	&= \int_{0}^{\infty} e^{-r^2} 2\pi r dr = \pi \int_{0}^{\infty} e^{-r^2} d(r^2) = \pi
+\end{aligned}
+\]
+故 \( A = \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi} \)。
+\end{proof}
+
+\begin{proposition}[Gauss-Weierstrass 核之 Fourier 变换]
+	设 \( f(x) = e^{-a x^2} \)（\( a > 0 \)），则其 Fourier 变换为
+	\[
+	\widehat{f}(\xi) = \int_{-\infty}^{\infty} e^{-a x^2} e^{-i \xi x} dx = \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}}
+	\]
+	这表明高斯分配的 Fourier 变换仍然是高斯分配，即高斯分配是 Fourier 变换的固有函数（eigenfunction）。（证明见附录）
+\end{proposition}
+
+\begin{solution}[解法一]
+	由 Cauchy 定理我们可以将积分平移至 \( x + iy \)，其中 \( -\infty < x < \infty \)。
+	
+	\[
+	\begin{aligned}
+		\widehat{f}(\xi) &= \int_{-\infty}^{\infty} e^{-a(x+iy)^2} e^{-i\xi(x+iy)} dx \\
+		&= \int_{-\infty}^{\infty} e^{-ax^2 + ay^2 + \xi y - ix(2ay + \xi)} dx \\
+		&= e^{ay^2 + \xi y} \int_{-\infty}^{\infty} e^{-ax^2 - ix(2ay + \xi)} dx
+	\end{aligned}
+	\]
+	
+	令 \( 2ay + \xi = 0 \)，即 \( y = -\frac{\xi}{2a} \)，则由高斯积分可得：
+	
+	\[
+	\widehat{f}(\xi) = e^{-\frac{\xi^2}{4a}} \int_{-\infty}^{\infty} e^{-ax^2} dx = \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}}
+	\]
+	
+\end{solution}
+
+\begin{solution}[解法二]
+	$\widehat{f}$ 可以表示为
+	\[
+	\widehat{f}(\xi) = e^{-\frac{\xi^2}{4a}} h(\xi), \quad \text{其中} \quad h(\xi) = \int_{-\infty}^{\infty} e^{-a(x + i\xi/2a)^2} dx
+	\]
+	
+	考虑函数 $h$ 之微分：
+	\[
+	h'(\xi) = -i \int_{-\infty}^{\infty} \left(x + \frac{i\xi}{2a}\right) e^{-a(x + i\xi/2a)^2} dx
+	\]
+	\[
+	= \frac{i}{2a} \int_{-\infty}^{\infty} \frac{d}{dx} e^{-a(x + i\xi/2a)^2} dx = 0
+	\]
+	
+	所以 $h$ 是常数 $h(\xi) = h(0) = \sqrt{\frac{\pi}{a}}$ 故得证，或是对 $\widehat{f}(\xi)$ 微分：
+	\[
+	\frac{d}{d\xi} \widehat{f}(\xi) = -\frac{\xi}{2a} e^{-\frac{\xi^2}{4a}} h(\xi) + e^{-\frac{\xi^2}{4a}} h'(\xi) = -\frac{\xi}{2a} \widehat{f}(\xi), \quad \widehat{f}(0) = h(0) = \sqrt{\frac{\pi}{a}}
+	\]
+	
+	解此微分方程也可得到相同的结果。
+\end{solution}
+
+
+
+\subsection{紧支撑光滑函数C$_c^\infty(\mathbb{R})$的傅里叶变换}
+若 $f \in C_c^\infty(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于$\mathcal{S}(\mathbb{R})$空间中的解析函数。紧支撑光滑函数的傅里叶变换具有解析性（Paley-Wiener定理）
+\begin{theorem}Paley-Wiener定理
+	
+	紧支撑光滑函数的傅里叶变换具有解析性，衰减性和非紧支撑性。
+	
+	即若 $f \in C_c^\infty(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于$\mathcal{S}(\mathbb{R})\cap C^\omega(\mathbb{R})$ 。
+	
+\end{theorem}
+
+
+
+
+\subsection{广义函数概念的引入}
+上面我们讨论的都是$R$上的传统函数，为了解决物理上的$\delta$函数，我们要把传统函数推广，使得像 $\delta$ 函数这样的也包含在函数范围内。广义函数不是函数空间，只是我们扩充函数空间的工具，让非传统函数被纳入讨论范围中。我们把被用广义函数扩充的函数空间称为测试函数空间。广义函数是测试函数空间上的连续线性泛函，即对偶空间。
+
+
+
+\begin{definition}广义函数
+	
+对于测试函数 \(\phi \in \mathcal{D}(\mathbb{R}^n)\) 或 \(\phi \in \mathcal{S}(\mathbb{R}^n)\)，广义函数 \(T\) 作用于 \(\phi\) 上，得到一个标量，记作：
+\[
+\langle T, \phi \rangle
+\]
+
+\end{definition}
+
+\begin{theorem}
+	\(T_1 \subset T_2\)，则 \(T_1' \supset T_2'\)
+\end{theorem}
+
+\begin{corollary}
+	$\mathcal{S}'(\R) \subset D'(\R)$
+\end{corollary}
+
+由于 $\mathcal{S}(\R) \supset C_c^\infty(\R)$，故$\mathcal{S}'(\R) \subset D'(\R)$
+
+\begin{corollary}空间关系
+$C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset L^2(\mathbb{R}) \subset \mathcal{S}'(\mathbb{R}) \subset D'(\mathbb{R})$	
+\end{corollary}
+说明 $\mathcal{S}'$和$(\mathbb{R})D'(\mathbb{R})$足够大。
+
+
+\subsection{$\mathcal{S}'$  上的傅里叶变换}
+
+\subsubsection{$\mathcal{S}'$  上的傅里叶变换定义与性质}
+
+\begin{theorem}乘积公式
+	
+	缓增分布空间 $\mathcal{S}'(\mathbb{R})$ 的傅里叶变换可完全定义在其自身空间内。具体而言，对任意缓增分布 $T \in \mathcal{S}'(\mathbb{R})$，其傅里叶变换 $\mathcal{F}T$ 通过如下对偶作用定义：
+	\[
+	\langle \mathcal{F}T, \phi \rangle = \langle T, \mathcal{F}\phi \rangle \quad \text{对所有 } \phi \in \mathcal{S}(\mathbb{R}) \text{ 成立}.
+	\]
+\end{theorem}	
+	
+	
+	此映射 $\mathcal{F}: \mathcal{S}'(\mathbb{R}) \to \mathcal{S}'(\mathbb{R})$ 是连续线性算子，并保持分布的缓增性。典型例子包括  $\delta$ 函数的傅里叶变换为常函数 $1 \in \mathcal{S}'(\mathbb{R})$，满足：
+	\[
+	\langle \mathcal{F}\delta, \phi \rangle = \langle \delta, \mathcal{F}\phi \rangle = \mathcal{F}\phi(0) = \int_{\mathbb{R}} \phi(x) \diff x = \langle 1, \phi \rangle.
+	\]
+
+
+\subsubsection{ $D'$ 上的傅里叶变换}
+
+	对于更一般的分布空间 $D'(\mathbb{R})$（即 $C_c^\infty(\mathbb{R})$ 的对偶空间），其傅里叶变换的定义需施加限制。若分布 $T \in D'(\mathbb{R})$ 同时属于 $\mathcal{S}'(\mathbb{R})$（即 $T$ 是缓增分布），则其傅里叶变换 $\mathcal{F}T$ 仍属于 $\mathcal{S}'(\mathbb{R})$。然而，对于非缓增分布（例如由指数增长函数 $e^{x^2}$ 生成的分布），经典理论中无法通过对偶性定义其傅里叶变换。此时需借助扩展理论（如超函数）或特殊方法处理。
+
+意味着 $\mathcal{S}'(\mathbb{R})$ 是唯一自然支持全域傅里叶变换的广义函数空间。对于 $D'(\mathbb{R})$，仅当其元素同时属于 $\mathcal{S}'(\mathbb{R})$ 时，傅里叶变换才具有明确定义，在此定义下，它会把分布映射到$\mathcal{S}'(\mathbb{R})$ 中的解析函数的分布。
+
+\subsubsection{$\delta$ 函数的傅里叶变换}
+狄拉克函数（Dirac delta function），通常简称为$\delta$函数，是一个广义函数，用于描述理想化的点源或瞬间的冲击。它在物理学和工程学中有广泛的应用。它在除了零点以外的所有点的值都为零，但在整个实数轴上的积分等于1。数学上可以表示为：
+\[
+\delta(x) = \begin{cases} 
+	+\infty, & x = 0 \\
+	0, & x \ne 0 
+\end{cases}
+\]
+并且满足：
+\[
+\int_{-\infty}^{+\infty} \delta(x) dx = 1
+\]
+\begin{definition}点态泛函（筛分性质）
+	
+	根据$\delta$函数可定义广义函数（分布）：
+	\[
+	\int_{-\infty}^{\infty} \delta(x - x_0) \phi(x) \, dx = \phi(x_0)
+	\]
+	或
+	\[
+	\langle \delta, \phi \rangle = \phi(0)
+	\]
+	这表示狄拉克函数在作用于测试函数时，返回测试函数在原点处的值。这种性质被称为筛分性质（sifting property）。
+\end{definition}
+
+\begin{definition}$\delta$函数的傅里叶变换
+	
+狄拉克函数的傅里叶变换具有特殊的意义。根据傅里叶变换的定义：
+\[
+\mathcal{F}[\delta(x)](\omega) = \int_{-\infty}^{+\infty} \delta(x) e^{-i\omega x} dx
+\]
+利用筛分性质，当 \(x = 0\) 时，积分结果为1。因此，狄拉克函数的傅里叶变换是一个常数函数：
+\[
+\mathcal{F}[\delta(x)](\omega) = 1
+\]
+这表明狄拉克函数的傅里叶变换在频域中包含了所有频率成分，且每个频率成分的幅度都相同。换句话说，狄拉克函数在时域中是一个理想化的脉冲，它包含了所有频率的信息。
+\end{definition}
+
+\newpage
+
+\appendix
+\section{附录}\label{app:first}
+
+% 紧支撑光滑函数与 Schwartz 空间的反例
+\subsection{紧支撑光滑函数与 Schwartz 空间包含关系}
+
+\( C_c^\infty(\mathbb{R}) \subsetneq \mathcal{S}(\mathbb{R}) \)存在属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C_c^\infty(\mathbb{R})\) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 属于 \(\mathcal{S}(\mathbb{R})\)，但其支集为整个实数轴 \(\mathbb{R}\)，不是紧支集。
+
+% Schwartz 空间与所有 L^p 空间交集的反例
+\subsection{Schwartz 空间与所有 \( L^p \) 空间非包含相交关系}
+存在函数属于所有 \( L^p(\mathbb{R}^n) \)（\(1 \leq p < \infty\)）但不属于 \(\mathcal{S}(\mathbb{R}^n)\)，例如：
+\[
+f(x) = \frac{1}{(1 + |x|^2)^{n/2}}
+\]
+其导数不满足速降性。
+
+% Schwartz 空间与实解析函数空间的反例
+\subsection{Schwartz 空间与实解析函数空间非包含关系}
+
+\( \mathcal{S}(\mathbb{R}) \not\subset C^\omega(\mathbb{R}) \)存在属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C^\omega(\mathbb{R})\) 的函数。例如，非零紧支撑光滑函数无法在全实轴上解析。
+
+\( C^\omega(\mathbb{R}) \not\subset \mathcal{S}(\mathbb{R}) \)存在属于 \(C^\omega(\mathbb{R})\) 但不属于 \(\mathcal{S}(\mathbb{R})\) 的函数。例如：
+\[
+f(x) = e^{-x^2} \cosh(x)
+\]
+该函数是实解析的，但具有指数增长性，不属于 Schwartz 空间。
+
+\( \mathcal{S}(\mathbb{R}^n) \) 与 \( C^\omega(\mathbb{R}) \) 的交集非空存在同时属于 \(\mathcal{S}(\mathbb{R}^n)\) 和 \( C^\omega(\mathbb{R}) \) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 既是解析的，又是速降的，属于两者。
+
+% 解析函数空间特性
+\subsection{Schwartz 空间与实解析函数空间非相交关系}
+
+通过 Paley-Wiener 定理说明紧支撑函数变换的解析性.根据 Paley-Wiener 定理，紧支撑光滑函数的傅里叶变换是解析的。例如，对于 \( f \in C_c^\infty(\mathbb{R}) \)，其傅里叶变换 \( \hat{f} \) 是整函数（在复平面上解析），并且对于任意 \( x \in \mathbb{R} \)，\( |\hat{f}(x)| \leq C e^{R|x|} \)，其中 \( C \) 和 \( R \) 是常数。
+
+解析函数与 Schwartz 空间的相交关系示例.存在同时属于 \( \mathcal{S}(\mathbb{R}^n) \) 和 \( C^\omega(\mathbb{R}) \) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 是解析的并且速降，因此属于两者。
+
+% D' 上的傅里叶变换
+\subsection{D' 上的傅里叶变换}
+
+对非缓增分布的处理说明.对于非缓增分布，需要扩展超函数理论来处理其傅里叶变换。缓增分布的傅里叶变换属于 Schwartz 空间 \( \mathcal{S}' \)，但非缓增分布可能不属于 \( \mathcal{S}' \)。
+
+反例：\( e^{x^2} \in \mathcal{D}' \) 但 \( \notin \mathcal{S}' \)高斯函数 \( f(x) = e^{x^2} \) 是一个非缓增分布的反例。它属于 \( \mathcal{D}'(\mathbb{R}) \)（可以通过配对光滑紧支援函数定义其作用），但不属于 \( \mathcal{S}'(\mathbb{R}) \)，因为它增长过快，无法用经典意义下的傅里叶变换处理。
+
+
+
+
+\end{document}
