@@ -50,7 +50,7 @@
 % ========== 文档信息 ==========
 \title{不同函数空间下的傅里叶变换}
 \author{陈柏均}
-\date{\today}
+\date{2025年4月25日}
 
 
 \begin{document}
@@ -118,11 +118,11 @@
 	C^n(\Omega)\subset L^p(\Omega),\quad 1\le p\le\infty.
 	\]
 	
-	\subsection{解析函数$C^\omega(\Omega)$}
+	\subsection{实解析函数$C^\omega(\Omega)$}
 	
-	\begin{definition}解析函数$C^\omega(\Omega)$
+	\begin{definition}实解析函数$C^\omega(\Omega)$
 		
-		若 $f:\Omega\to\R$ 在开集 $\Omega\subset\R^n$ 上可微无穷次，且任取 $x_0\in\Omega$，函数 $f$ 在 $x_0$ 的泰勒级数收敛并与 $f$ 一致，则称 $f$ 为解析函数。
+		若 $f:\Omega\to\R$ 在开集 $\Omega\subset\R^n$ 上可微无穷次，且任取 $x_0\in\Omega$，函数 $f$ 在 $x_0$ 的泰勒级数收敛并与 $f$ 一致，则称 $f$ 为实解析函数。简单来说就不仅无穷可微，而且余项极限为0，在每点可泰勒展开。
 	\end{definition}
 	
 	所有解析函数构成的集合记作 $C^\omega(\Omega)$，有包含关系：
@@ -202,6 +202,7 @@
 	\subsection{测度无穷情形 ($\mu(X)=\infty$)}
 	空间包含关系可总结为（例子见附录\ref{app:first}）
 \begin{itemize}
+	\item$ L^p$空间无包含关系
 \item	$	C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset C^\infty(\mathbb{R})$
 \item	$C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset  L^p(\mathbb{R}) ,1\leq p\le\infty$
 \item	$\mathcal{S}(\mathbb{R}^n) \subsetneq \bigcap_{1 \leq p < \infty} L^p(\mathbb{R}^n)$
@@ -333,7 +334,7 @@
 
 
 
- \subsubsection{积分性质}
+ \subsubsection{积分性质（需要后面广义分布$\delta$函数）}
  \begin{theorem}积分
  	
  设 \( f(t) \) 是一个可积函数，其傅里叶变换为 \( \hat{f}(\omega) \)。对于函数 \( g(t) = \int_{-\infty}^{t} f(\tau) \, d\tau \)，其傅里叶变换可以表示为：
@@ -666,46 +667,104 @@ $C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset L^2(\mathbb{R}) 
 \appendix
 \section{附录}\label{app:first}
 
+\subsection{$L^p$空间在测度无穷下无包含关系}
+\begin{example}{属于 \( L^1 \) 但不属于 \( L^2 \) 的函数}
+	
+考虑在实数轴上，定义函数 \( f(x) \) 在区间 \([n, n + \frac{1}{n^2})\)（\( n \geq 1 \)）上取值 \( \sqrt{n} \)，其他区域为 0。此时：
+
+\[
+	\int_{\mathbb{R}} |f(x)| \, dx = \sum_{n=1}^\infty \sqrt{n} \cdot \frac{1}{n^2} 
+	= \sum_{n=1}^\infty \frac{1}{n^{3/2}} < \infty
+\]
+由于 \( p = 3/2 > 1 \)，级数收敛，故 \( f \in L^1 \)。
+\[
+	\int_{\mathbb{R}} |f(x)|^2 \, dx = \sum_{n=1}^\infty (\sqrt{n})^2 \cdot \frac{1}{n^2} = \sum_{n=1}^\infty \frac{1}{n} = \infty
+\]
+调和级数发散，故 \( f \notin L^2 \)。
+\end{example}
+
+
+
+\begin{example}{属于 \( L^2 \) 但不属于 \( L^1 \) 的函数}
+
+定义函数 \( f(x) = \frac{1}{x} \) 在区间 \([1, \infty)\) 上。此时：
+\[
+\int_{1}^\infty \frac{1}{x} \, dx = \lim_{b \to \infty} \ln x \Big|_{1}^{b} 	= \infty
+\]
+故 \( f \notin L^1 \)。
+\[
+	\int_{1}^\infty \left(\frac{1}{x}\right)^2 \, dx = \left. -\frac{1}{x} \right|_{1}^{\infty} = 1 < \infty
+\]
+故 \( f \in L^2 \)。
+
+\end{example}
+
+
+
+
 % 紧支撑光滑函数与 Schwartz 空间的反例
 \subsection{紧支撑光滑函数与 Schwartz 空间包含关系}
+\begin{example}属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C_c^\infty(\mathbb{R})\) 的函数
+	
+高斯函数 \( f(x) = e^{-x^2} \) 属于 \(\mathcal{S}(\mathbb{R})\)，但其支集为整个实数轴 \(\mathbb{R}\)，不是紧支集。
 
-\( C_c^\infty(\mathbb{R}) \subsetneq \mathcal{S}(\mathbb{R}) \)存在属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C_c^\infty(\mathbb{R})\) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 属于 \(\mathcal{S}(\mathbb{R})\)，但其支集为整个实数轴 \(\mathbb{R}\)，不是紧支集。
+\end{example}
 
 % Schwartz 空间与所有 L^p 空间交集的反例
-\subsection{Schwartz 空间与所有 \( L^p \) 空间非包含相交关系}
-存在函数属于所有 \( L^p(\mathbb{R}^n) \)（\(1 \leq p < \infty\)）但不属于 \(\mathcal{S}(\mathbb{R}^n)\)，例如：
+\subsection{Schwartz 空间与所有 \( L^p \) 空间非真包含关系}
+\begin{example}属于所有 \( L^p(\mathbb{R}^n) \)（\(1 \leq p < \infty\)）但不属于 \(\mathcal{S}(\mathbb{R}^n)\)
 \[
 f(x) = \frac{1}{(1 + |x|^2)^{n/2}}
 \]
 其导数不满足速降性。
+\end{example}
 
 % Schwartz 空间与实解析函数空间的反例
 \subsection{Schwartz 空间与实解析函数空间非包含关系}
 
-\( \mathcal{S}(\mathbb{R}) \not\subset C^\omega(\mathbb{R}) \)存在属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C^\omega(\mathbb{R})\) 的函数。例如，非零紧支撑光滑函数无法在全实轴上解析。
+\begin{example}属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C^\omega(\mathbb{R})\) 的函数。非零紧支撑光滑函数无法在全实轴上解析。
+\[
+f(x) = \begin{cases} 
+	e^{-1/(1 - x^2)} & \text{当 } |x| < 1, \\
+	0 & \text{当 } |x| \geq 1.
+\end{cases}
+\]
+这个函数属于 \(\mathcal{S}(\mathbb{R})\)，因为它是一个光滑函数（无穷可导），并且它及其所有导数在无穷远处都迅速衰减到零。然而，这个函数在 \(\pm 1\) 处的泰勒展开不收敛到函数本身，因此它不是解析的，即不属于 \(C^\omega(\mathbb{R})\)。
+\end{example}
 
-\( C^\omega(\mathbb{R}) \not\subset \mathcal{S}(\mathbb{R}) \)存在属于 \(C^\omega(\mathbb{R})\) 但不属于 \(\mathcal{S}(\mathbb{R})\) 的函数。例如：
+\begin{example}属于 \(C^\omega(\mathbb{R})\) 但不属于 \(\mathcal{S}(\mathbb{R})\) 的函数。
 \[
 f(x) = e^{-x^2} \cosh(x)
 \]
 该函数是实解析的，但具有指数增长性，不属于 Schwartz 空间。
 
-\( \mathcal{S}(\mathbb{R}^n) \) 与 \( C^\omega(\mathbb{R}) \) 的交集非空存在同时属于 \(\mathcal{S}(\mathbb{R}^n)\) 和 \( C^\omega(\mathbb{R}) \) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 既是解析的，又是速降的，属于两者。
+\end{example}
 
-% 解析函数空间特性
-\subsection{Schwartz 空间与实解析函数空间非相交关系}
 
-通过 Paley-Wiener 定理说明紧支撑函数变换的解析性.根据 Paley-Wiener 定理，紧支撑光滑函数的傅里叶变换是解析的。例如，对于 \( f \in C_c^\infty(\mathbb{R}) \)，其傅里叶变换 \( \hat{f} \) 是整函数（在复平面上解析），并且对于任意 \( x \in \mathbb{R} \)，\( |\hat{f}(x)| \leq C e^{R|x|} \)，其中 \( C \) 和 \( R \) 是常数。
+\begin{example}\( \mathcal{S}(\mathbb{R}^n) \) 与 \( C^\omega(\mathbb{R}) \) 的交集非空
+	
+高斯函数 \( f(x) = e^{-x^2} \) 既是解析的，又是速降的，属于两者。
+\end{example}
 
-解析函数与 Schwartz 空间的相交关系示例.存在同时属于 \( \mathcal{S}(\mathbb{R}^n) \) 和 \( C^\omega(\mathbb{R}) \) 的函数。例如，高斯函数 \( f(x) = e^{-x^2} \) 是解析的并且速降，因此属于两者。
+\subsection{实解析函数除了非零函数都不是紧支撑函数}
+\begin{example}随便举一个例子
+	\[
+	f(x) = e^x
+	\]
+	这个函数是解析的，因为它的泰勒级数在全实数范围内收敛。然而，\(e^x\) 在 \(x \to \infty\) 时呈指数增长，因此它在任何紧致集外都不为零，即不属于紧支撑函数空间。
+\end{example}
 
 % D' 上的傅里叶变换
 \subsection{D' 上的傅里叶变换}
 
 对非缓增分布的处理说明.对于非缓增分布，需要扩展超函数理论来处理其傅里叶变换。缓增分布的傅里叶变换属于 Schwartz 空间 \( \mathcal{S}' \)，但非缓增分布可能不属于 \( \mathcal{S}' \)。
 
-反例：\( e^{x^2} \in \mathcal{D}' \) 但 \( \notin \mathcal{S}' \)高斯函数 \( f(x) = e^{x^2} \) 是一个非缓增分布的反例。它属于 \( \mathcal{D}'(\mathbb{R}) \)（可以通过配对光滑紧支援函数定义其作用），但不属于 \( \mathcal{S}'(\mathbb{R}) \)，因为它增长过快，无法用经典意义下的傅里叶变换处理。
-
+\begin{example}属于$\mathcal{D}'$但不属于$\mathcal{S}'$的函数
+		\[ 
+		f(x) = e^{x^2} 
+		\] 
+		是一个非缓增分布的反例。它属于 \( \mathcal{D}'(\mathbb{R}) \)（可以通过配对光滑紧支援函数定义其作用），但不属于 \( \mathcal{S}'(\mathbb{R}) \)，因为它增长过快，无法用经典意义下的傅里叶变换处理。
+\end{example}
 
 
 
