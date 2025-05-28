@@ -50,7 +50,7 @@
 % ========== 文档信息 ==========
 \title{不同函数空间下的傅里叶变换}
 \author{陈柏均}
-\date{2025年4月25日}
+\date{2025年4月20日}
 
 
 \begin{document}
@@ -58,7 +58,7 @@
 		\begin{abstract}
 		本文目的是为了探讨不同函数空间下的傅里叶变换。在此之前，首先讨论$L^p$空间，$C^n(\Omega)$空间，解析函数空间，$C_c^\infty(\Omega)$空间，速降函数S空间在测度有限和测度无穷的关系，因为如果空间有包含关系，那子空间的傅里叶变换性质就可以继承大空间的性质。测度有限是为了傅里叶级数的说明，增加文章可读性。测度无穷才是为我们的傅里叶变换做铺路。
 		
-		其次，还介绍了紧支撑的概念。是因为傅里叶变换本质就是积分，想要变换存在，就必须要积分有限，这正是$L^p$空间所能做到的，但是我们想探讨其他空间，只要让他包含$L^p$空间中就能得到很好的处理。比如光滑函数。在测度无穷下，光滑函数空间与$L^p$空间无包含关系，加上紧支撑就能被包含在$L^p$空间，这就是紧支撑的作用。
+		其次，还介绍了紧支撑的概念。是因为傅里叶变换本质就是积分，想要变换存在，就必须要积分有限，这正是$L^p$空间所能做到的，但是我们想探讨其他空间，只要让他包含$L^p$空间中就能得到很好2的处理。比如光滑函数。在测度无穷下，光滑函数空间与$L^p$空间无包含关系，加上紧支撑就能被包含在$L^p$空间，这就是紧支撑的作用。
 		
 		然后，我们探讨不同函数空间下的傅里叶变换的定义和性质。
 		
@@ -118,21 +118,32 @@
 	C^n(\Omega)\subset L^p(\Omega),\quad 1\le p\le\infty.
 	\]
 	
-	\subsection{实解析函数$C^\omega(\Omega)$}
+	\subsection{解析函数$C^\omega(\Omega)$}
 	
-	\begin{definition}实解析函数$C^\omega(\Omega)$
+	\begin{definition}解析函数$C^\omega(\Omega)$
 		
-		若 $f:\Omega\to\R$ 在开集 $\Omega\subset\R^n$ 上可微无穷次，且任取 $x_0\in\Omega$，函数 $f$ 在 $x_0$ 的泰勒级数收敛并与 $f$ 一致，则称 $f$ 为实解析函数。简单来说就不仅无穷可微，而且余项极限为0，在每点可泰勒展开。
+		若 $f:\Omega\to\R$ 在开集 $\Omega\subset\R^n$ 上可微无穷次，且任取 $x_0\in\Omega$，函数 $f$ 在 $x_0$ 的泰勒级数收敛并与 $f$ 一致，则称 $f$ 为解析函数。
 	\end{definition}
 	
 	所有解析函数构成的集合记作 $C^\omega(\Omega)$，有包含关系：
 	\[
 	C^\omega(\Omega)\subsetneq C^\infty(\Omega).
 	\]
-	而且解析函数都是非紧支撑的，除了0函数。
-
+	这个包含是严格的。例如 bump 函数
+	\[
+	\varphi(x)=
+	\begin{cases}
+		\exp\left(-\frac{1}{1-x^2}\right), & |x|<1, \\
+		0, & |x|\ge 1,
+	\end{cases}
+	\]
+	是光滑函数，但不是解析函数，因为其在 $x=\pm 1$ 附近所有导数虽存在，但泰勒展开恒为 0，与函数本身不一致。
+	\href{https://en.wikipedia.org/wiki/Smoothness}{Smoothness}
 	
 	在拓扑意义下，$C^\omega(\Omega)$ 在 $C^\infty(\Omega)$ 中并不稠密。紧支撑光滑函数 $C_c^\infty(\Omega)$ 的存在正是为了替代解析函数在分布论中的不足，因为解析函数不允许有紧支撑，而 $C_c^\infty$ 中的 bump 函数是构造近似单位、分布作用的重要工具。
+	
+	解析函数不允许有紧支撑，除0函数，是因为解析函数可以泰勒展开成多项式，最多有$n$个根，即零点最多可数个，我们可知可数集的测度是0，所以他的支集为全体实数空间，不是紧的（有界闭集）。
+	
 	
 	\subsection{紧支撑概念的引入}
 	光滑函数空间 $C^\infty(\mathbb{R})$ 中的函数在无穷远处可能不衰减，导致其不属于 $L^p(\mathbb{R})$。为保证积分收敛性，引入紧支撑光滑函数空间：
@@ -151,7 +162,7 @@
 		
 		
 		即所有支持集紧于 $\Omega$ 的光滑函数。其在分布与弱解理论中用于构造逼近序列及光滑化操作。
-		
+		\href{https://en.wikipedia.org/wiki/Bump_function}{Bump function}
 	\end{definition}
 	
 	\subsection{速降函数空间 $\mathcal S$}
@@ -167,8 +178,6 @@
 	\end{definition}
 	
 	由定义可知速降函数空间 $\mathcal S$仅在测度无穷才存在。
-	
-	
 	
 	  \begin{theorem}求导运算和与多项式乘积运算封闭
 		
@@ -191,36 +200,79 @@
 	
 	\section{不同函数空间在测度有穷和无穷下的关系}
 	
-	\subsection{测度有限情形 }
-	\begin{itemize}
-\item		在有限测度空间中，若 $1\leq p<q\le\infty$，则$	L^q(X)\subset L^p(X)$
-\item	对于有界开域 $\Omega$，$	C^n(\Omega)\subset L^p(\Omega),\quad
-	C^\infty(\Omega)\subset L^p(\Omega),\quad
-	C_c^\infty(\Omega)\subset L^p(\Omega)$
-\end{itemize}
+	\subsection{测度有限情形 ($\mu(X)<\infty$)}
 	
-	\subsection{测度无穷情形}
-	空间包含关系可总结为（例子见附录\ref{app:first}）
-\begin{itemize}
-	\item$ L^p$空间无包含关系
-\item	$	C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset C^\infty(\mathbb{R})$
-\item	$C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset  L^p(\mathbb{R}) ,1\leq p\le\infty$
-\item	$\mathcal{S}(\mathbb{R}^n) \subsetneq \bigcap_{1 \leq p < \infty} L^p(\mathbb{R}^n)$
-\item	 $\mathcal{S}(\mathbb{R}^n)$ 与$ C^\omega(\mathbb{R})$相交但互不包含。
-\end{itemize}
- 
- 
+	在有限测度空间中，若 $1\leq p<q\le\infty$，则
+	\[
+	L^q(X)\subset L^p(X)\quad
+	\]
+	
+	\begin{proof}
+	当测度空间满足 $1 \leq p_1 \leq p_2 < +\infty$ 且 $m(E) < +\infty$ 时：
+	
+	若函数 $x(t)$ 属于 $L^{p_2}(E)$，则
+	\[
+	\left( \int_E |x(t)|^{p_2} \, dt \right)^{\frac{1}{p_2}} < +\infty
+	\]
+	因此
+	\[
+	\int_E |x(t)|^{p_2} \, dt < +\infty
+	\]
+	
+	设集合 $B = \{ t \in E \mid |x(t)| \leq 1 \}$，则
+	\[
+	\int_E |x(t)|^{p_1} \, dt = \int_B |x(t)|^{p_1} \, dt + \int_{E \setminus B} |x(t)|^{p_1} \, dt
+	\]
+	
+	由于在 $B$ 上 $|x(t)| \leq 1$，故 $|x(t)|^{p_1} \leq 1$，从而
+	\[
+	\int_B |x(t)|^{p_1} \, dt \leq m(B)
+	\]
+	在 $E \setminus B$ 上 $|x(t)| > 1$，由于 $p_1 \leq p_2$，故 $|x(t)|^{p_1} \leq |x(t)|^{p_2}$，因此
+	\[
+	\int_{E \setminus B} |x(t)|^{p_1} \, dt \leq \int_{E \setminus B} |x(t)|^{p_2} \, dt
+	\]
+	
+	综合得：
+	\[
+	\int_E |x(t)|^{p_1} \, dt \leq m(B) + \int_{E \setminus B} |x(t)|^{p_2} \, dt \leq m(E) + \int_E |x(t)|^{p_2} \, dt < +\infty
+	\]
+	
+	因此，在有限测度空间中，若 $x(t) \in L^{p_2}(E)$，则 $x(t) \in L^{p_1}(E)$。这表明 $L^{p_2}(E) \subseteq L^{p_1}(E)$，即 $L^p$ 空间具有包含关系，且 $L^1$ 是最大的。特别地，当测度有限时，$L^\infty(E) \subseteq L^1(E)$。
+	
+	\end{proof}
+	
+	
+	
+	
+	对于有界开域 $\Omega$，还具有
+	\[
+	C^n(\Omega)\subset L^p(\Omega),\quad
+	C^\infty(\Omega)\subset L^p(\Omega),\quad
+	C_c^\infty(\Omega)\subset L^p(\Omega)
+	\]
+	且 $C_c^\infty(\Omega)$ 在 $L^p(\Omega)$ 下稠密。
+	
+	\subsection{测度无穷情形 ($\mu(X)=\infty$)}
+	空间包含关系可总结为：
+	\[
+	C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset C^\infty(\mathbb{R})
+	\]
+\[
+C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset  L^p(\mathbb{R}) ,1\leq p\le\infty
+ \]
+\[ 
+\mathcal{S}(\mathbb{R}^n) \subsetneq \bigcap_{1 \leq p < \infty} L^p(\mathbb{R}^n)
+ \]
  
 在下文我们将讨论不同空间下的傅里叶变换，故如果空间有包含关系，那性质子空间就可以继承大空间的性质，就不再重复说明，子空间的性质我们只讨论子空间特有的性质。
 
 \subsubsection{稠密关系}
-\begin{itemize}
-\item $C_c^\infty(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密；
+ $C_c^\infty(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中稠密（$1 \leq p < \infty$）；
  
-	\item $\mathcal{S}(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中同样稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密；
+	 $\mathcal{S}(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中同样稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密；
 	 
-	 \item $ L^1(\mathbb{R}) \cap L^2(\mathbb{R})$ 在 $L^p(\mathbb{R})$ 中同样稠密（$1 \leq p < \infty$），但在 $L^\infty(\mathbb{R})$ 中不稠密。
-	\end{itemize}
+	 $C^\infty(\mathbb{R})$ 中存在非 $L^p$ 函数（例如常函数 $1 \notin L^p(\mathbb{R})$）。
 
 
 
@@ -334,7 +386,7 @@
 
 
 
- \subsubsection{积分性质（需要后面广义分布$\delta$函数）}
+ \subsubsection{积分性质}
  \begin{theorem}积分
  	
  设 \( f(t) \) 是一个可积函数，其傅里叶变换为 \( \hat{f}(\omega) \)。对于函数 \( g(t) = \int_{-\infty}^{t} f(\tau) \, d\tau \)，其傅里叶变换可以表示为：
@@ -457,7 +509,7 @@ $L^1(\mathbb{R}) \cap L^2(\mathbb{R}$在$L^2(\mathbb{R})$稠密。因为稠密�
 \| \mathcal{F}[f] \|_{L^2} = \| f \|_{L^2}
 \]
 \end{theorem}
-Plancherel定理的证明依赖于$L^1\cap L^2$在$L^2$中的稠密性.
+
 
 
 \subsubsection{Fourier逆变换}
@@ -487,12 +539,12 @@ f(x) = \frac{1}{\sqrt{2\pi}} \int_{\mathbb{R}} \mathcal{F}f(\omega) e^{i\omega x
 
 
 \subsubsection{高斯型函数的傅里叶变换}
-\begin{lemma}高斯积分
+\begin{corollary}高斯积分
 	
 	\[
 	\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 	\]
-\end{lemma}
+\end{corollary}
 
 \begin{proof}
  设 \( A = \int_{-\infty}^{\infty} e^{-x^2} dx \)，则由极坐标与 Fubini 定理可得
@@ -510,7 +562,7 @@ f(x) = \frac{1}{\sqrt{2\pi}} \int_{\mathbb{R}} \mathcal{F}f(\omega) e^{i\omega x
 	\[
 	\widehat{f}(\xi) = \int_{-\infty}^{\infty} e^{-a x^2} e^{-i \xi x} dx = \sqrt{\frac{\pi}{a}} e^{-\frac{\xi^2}{4a}}
 	\]
-	这表明高斯分配的 Fourier 变换仍然是高斯分配，即高斯分配是 Fourier 变换的固有函数（eigenfunction）。（证明见附录）
+	这表明高斯分配的 Fourier 变换仍然是高斯分配，即高斯分配是 Fourier 变换的固有函数（eigenfunction）。
 \end{proposition}
 
 \begin{solution}[解法一]
@@ -557,15 +609,7 @@ f(x) = \frac{1}{\sqrt{2\pi}} \int_{\mathbb{R}} \mathcal{F}f(\omega) e^{i\omega x
 
 
 \subsection{紧支撑光滑函数C$_c^\infty(\mathbb{R})$的傅里叶变换}
-若 $f \in C_c^\infty(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于$\mathcal{S}(\mathbb{R})$空间中的解析函数。紧支撑光滑函数的傅里叶变换具有解析性（Paley-Wiener定理）
-\begin{theorem}Paley-Wiener定理
-	
-	紧支撑光滑函数的傅里叶变换具有解析性，衰减性和非紧支撑性。
-	
-	即若 $f \in C_c^\infty(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于$\mathcal{S}(\mathbb{R})\cap C^\omega(\mathbb{R})$ 。
-	
-\end{theorem}
-
+若 $f \in C_c^\infty(\mathbb{R})$，则其傅里叶变换 $\hat{f}$ 属于 Schwartz 空间 $\mathcal{S}(\mathbb{R})$。
 
 
 
@@ -622,7 +666,7 @@ $C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset L^2(\mathbb{R}) 
 
 	对于更一般的分布空间 $D'(\mathbb{R})$（即 $C_c^\infty(\mathbb{R})$ 的对偶空间），其傅里叶变换的定义需施加限制。若分布 $T \in D'(\mathbb{R})$ 同时属于 $\mathcal{S}'(\mathbb{R})$（即 $T$ 是缓增分布），则其傅里叶变换 $\mathcal{F}T$ 仍属于 $\mathcal{S}'(\mathbb{R})$。然而，对于非缓增分布（例如由指数增长函数 $e^{x^2}$ 生成的分布），经典理论中无法通过对偶性定义其傅里叶变换。此时需借助扩展理论（如超函数）或特殊方法处理。
 
-意味着 $\mathcal{S}'(\mathbb{R})$ 是唯一自然支持全域傅里叶变换的广义函数空间。对于 $D'(\mathbb{R})$，仅当其元素同时属于 $\mathcal{S}'(\mathbb{R})$ 时，傅里叶变换才具有明确定义，在此定义下，它会把分布映射到$\mathcal{S}'(\mathbb{R})$ 中的解析函数的分布。
+意味着 $\mathcal{S}'(\mathbb{R})$ 是唯一自然支持全域傅里叶变换的广义函数空间。对于 $D'(\mathbb{R})$，仅当其元素同时属于 $\mathcal{S}'(\mathbb{R})$ 时，傅里叶变换才具有明确定义。
 
 \subsubsection{$\delta$ 函数的傅里叶变换}
 狄拉克函数（Dirac delta function），通常简称为$\delta$函数，是一个广义函数，用于描述理想化的点源或瞬间的冲击。它在物理学和工程学中有广泛的应用。它在除了零点以外的所有点的值都为零，但在整个实数轴上的积分等于1。数学上可以表示为：
@@ -661,110 +705,6 @@ $C_c^\infty(\mathbb{R}) \subset \mathcal{S}(\mathbb{R}) \subset L^2(\mathbb{R}) 
 \]
 这表明狄拉克函数的傅里叶变换在频域中包含了所有频率成分，且每个频率成分的幅度都相同。换句话说，狄拉克函数在时域中是一个理想化的脉冲，它包含了所有频率的信息。
 \end{definition}
-
-\newpage
-
-\appendix
-\section{附录}\label{app:first}
-
-\subsection{$L^p$空间在测度无穷下无包含关系}
-\begin{example}{属于 \( L^1 \) 但不属于 \( L^2 \) 的函数}
-	
-考虑在实数轴上，定义函数 \( f(x) \) 在区间 \([n, n + \frac{1}{n^2})\)（\( n \geq 1 \)）上取值 \( \sqrt{n} \)，其他区域为 0。此时：
-
-\[
-	\int_{\mathbb{R}} |f(x)| \, dx = \sum_{n=1}^\infty \sqrt{n} \cdot \frac{1}{n^2} 
-	= \sum_{n=1}^\infty \frac{1}{n^{3/2}} < \infty
-\]
-由于 \( p = 3/2 > 1 \)，级数收敛，故 \( f \in L^1 \)。
-\[
-	\int_{\mathbb{R}} |f(x)|^2 \, dx = \sum_{n=1}^\infty (\sqrt{n})^2 \cdot \frac{1}{n^2} = \sum_{n=1}^\infty \frac{1}{n} = \infty
-\]
-调和级数发散，故 \( f \notin L^2 \)。
-\end{example}
-
-
-
-\begin{example}{属于 \( L^2 \) 但不属于 \( L^1 \) 的函数}
-
-定义函数 \( f(x) = \frac{1}{x} \) 在区间 \([1, \infty)\) 上。此时：
-\[
-\int_{1}^\infty \frac{1}{x} \, dx = \lim_{b \to \infty} \ln x \Big|_{1}^{b} 	= \infty
-\]
-故 \( f \notin L^1 \)。
-\[
-	\int_{1}^\infty \left(\frac{1}{x}\right)^2 \, dx = \left. -\frac{1}{x} \right|_{1}^{\infty} = 1 < \infty
-\]
-故 \( f \in L^2 \)。
-
-\end{example}
-
-
-
-
-% 紧支撑光滑函数与 Schwartz 空间的反例
-\subsection{紧支撑光滑函数与 Schwartz 空间包含关系}
-\begin{example}属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C_c^\infty(\mathbb{R})\) 的函数
-	
-高斯函数 \( f(x) = e^{-x^2} \) 属于 \(\mathcal{S}(\mathbb{R})\)，但其支集为整个实数轴 \(\mathbb{R}\)，不是紧支集。
-
-\end{example}
-
-% Schwartz 空间与所有 L^p 空间交集的反例
-\subsection{Schwartz 空间与所有 \( L^p \) 空间非真包含关系}
-\begin{example}属于所有 \( L^p(\mathbb{R}^n) \)（\(1 \leq p < \infty\)）但不属于 \(\mathcal{S}(\mathbb{R}^n)\)
-\[
-f(x) = \frac{1}{(1 + |x|^2)^{n/2}}
-\]
-其导数不满足速降性。
-\end{example}
-
-% Schwartz 空间与实解析函数空间的反例
-\subsection{Schwartz 空间与实解析函数空间非包含关系}
-
-\begin{example}属于 \(\mathcal{S}(\mathbb{R})\) 但不属于 \(C^\omega(\mathbb{R})\) 的函数。非零紧支撑光滑函数无法在全实轴上解析。
-\[
-f(x) = \begin{cases} 
-	e^{-1/(1 - x^2)} & \text{当 } |x| < 1, \\
-	0 & \text{当 } |x| \geq 1.
-\end{cases}
-\]
-这个函数属于 \(\mathcal{S}(\mathbb{R})\)，因为它是一个光滑函数（无穷可导），并且它及其所有导数在无穷远处都迅速衰减到零。然而，这个函数在 \(\pm 1\) 处的泰勒展开不收敛到函数本身，因此它不是解析的，即不属于 \(C^\omega(\mathbb{R})\)。
-\end{example}
-
-\begin{example}属于 \(C^\omega(\mathbb{R})\) 但不属于 \(\mathcal{S}(\mathbb{R})\) 的函数。
-\[
-f(x) = e^{-x^2} \cosh(x)
-\]
-该函数是实解析的，但具有指数增长性，不属于 Schwartz 空间。
-
-\end{example}
-
-
-\begin{example}\( \mathcal{S}(\mathbb{R}^n) \) 与 \( C^\omega(\mathbb{R}) \) 的交集非空
-	
-高斯函数 \( f(x) = e^{-x^2} \) 既是解析的，又是速降的，属于两者。
-\end{example}
-
-\subsection{实解析函数除了非零函数都不是紧支撑函数}
-\begin{example}指数函数
-	\[
-	f(x) = e^x
-	\]
-	这个函数是解析的，因为它的泰勒级数在全实数范围内收敛。然而，\(e^x\) 在 \(x \to \infty\) 时呈指数增长，因此它在任何紧致集外都不为零，即不属于紧支撑函数空间。
-\end{example}
-
-% D' 上的傅里叶变换
-\subsection{D' 上的傅里叶变换}
-
-对非缓增分布的处理说明.对于非缓增分布，需要扩展超函数理论来处理其傅里叶变换。缓增分布的傅里叶变换属于 Schwartz 空间 \( \mathcal{S}' \)，但非缓增分布可能不属于 \( \mathcal{S}' \)。
-
-\begin{example}属于$\mathcal{D}'$但不属于$\mathcal{S}'$的函数
-		\[ 
-		f(x) = e^{x^2} 
-		\] 
-		是一个非缓增分布的反例。它属于 \( \mathcal{D}'(\mathbb{R}) \)（可以通过配对光滑紧支援函数定义其作用），但不属于 \( \mathcal{S}'(\mathbb{R}) \)，因为它增长过快，无法用经典意义下的傅里叶变换处理。
-\end{example}
 
 
 
